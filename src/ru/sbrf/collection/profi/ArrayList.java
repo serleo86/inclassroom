@@ -1,20 +1,18 @@
 package ru.sbrf.collection.profi;
 
 
-public class ArrayList implements List  {
-    private Object [] array;
-    private Object [] arrayNew;
+public class ArrayList implements List {
+    private Object[] array;
     private int size;
 
-    public ArrayList () {
-        array = new Object[10];
+    public ArrayList() {
+        initialize();
     }
 
-    private ArrayList(Object[] array) {
-        this.array = array;
+    private ArrayList(int size) {
+        this.array = new Object[size];
+        this.size = size;
     }
-
-
 
     @Override
     public int size() {
@@ -23,72 +21,67 @@ public class ArrayList implements List  {
 
     @Override
     public boolean isEmpty() {
-        return (size==0);
+        return (size == 0);
     }
 
     @Override
     public boolean contains(Object item) {
-        for (int i=0; i<size; i++) {
-            if (array[i].equals(item))
-                return true;
-        }
-        return false;
+        return indexOf(item) != -1;
     }
 
     @Override
     public boolean add(Object item) {
-        moreLength();
-        array[size++]=item;
+        extendArrayAsNeeded();
+        array[size++] = item;
         return true;
     }
 
     @Override
     public boolean remove(Object item) {
-        for (int i = 0; i < size; i++) {
-            if (array[i].equals(item)) {
-                for (int j = i; j < size - 1; j++) {
-                    array[j] = array[j + 1];
-                }
-                size--;
-                return true;
-            }
+        int index = indexOf(item);
+        if (index != -1) {
+            remove(index);
+            return true;
         }
         return false;
     }
 
     @Override
-    public void clear(){
+    public void clear() {
+        initialize();
+    }
+
+    private void initialize() {
         array = new Object[10];
+        size = 0;
     }
 
     @Override
     public void add(int index, Object item) {
-        moreLength();
-        for (int i=size-1; i>=index; i--) {
-            array[i] = array [i+1];
+        extendArrayAsNeeded();
+        for (int i = size - 1; i >= index; i--) {
+            array[i] = array[i + 1];
         }
-        array[index]=item;
+        array[index] = item;
         size++;
     }
 
     @Override
     public void set(int index, Object item) {
-            if (index<size)
-                array[index]=item;
+        checkForRange(index);
+        array[index] = item;
     }
 
 
     @Override
     public Object get(int index) {
-        if (index<size)
-            return array[index];
-        else
-            throw new IndexOutOfBoundsException();
+        checkForRange(index);
+        return array[index];
     }
 
     @Override
     public int indexOf(Object item) {
-        for  (int i=0; i<size; i++) {
+        for (int i = 0; i < size; i++) {
             if (array[i].equals(item))
                 return i;
         }
@@ -106,28 +99,36 @@ public class ArrayList implements List  {
 
     @Override
     public void remove(int index) {
-        for (int i=0; i<index; i++) {
-            if (i==index)
-                for (int j=i; j<size-1; j++)
-                    array[j]=array[j+1];
-            size--;
+        checkForRange(index);
+        for (int i = index; i < size - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        array[--size] = null;
+    }
+
+    private void checkForRange(int index) {
+        if ((index < 0) || (index > size)) {
+            throw new IndexOutOfBoundsException();
         }
     }
 
     @Override
     public List subList(int from, int to) {
-        if (to <= size) {
-            Object[] arrayNew = new Object[to - from];
-            int j = 0;
-            for (int i = from; i < to; i++) {
-                arrayNew[j++] = array[i];
-            }
-            return new ArrayList(arrayNew);
+        checkForRange(to, from);
+        List result = new ArrayList(to - from);
+        for (int i = from; i < to; i++) {
+            result.add(array[i]);
         }
-        throw new IndexOutOfBoundsException();
+        return result;
     }
 
-    private void moreLength() {
+    private void checkForRange(int to, int from) {
+        if (from > to) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
+    private void extendArrayAsNeeded() {
         if (array.length == size) {
             Object[] arrayNew = new Object[size * 3 / 2 + 1];
             for (int i = 0; i < size; i++) {

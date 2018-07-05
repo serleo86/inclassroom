@@ -1,9 +1,9 @@
 package ru.sbrf.collection.profi;
 
 public interface List extends Collection {
-    void add(int Index, Object item);
+    void add(int index, Object item);
 
-    void set(int Index, Object item);
+    void set(int index, Object item);
 
     Object get(int index);
 
