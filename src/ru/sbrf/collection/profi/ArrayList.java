@@ -73,19 +73,17 @@ public class ArrayList implements List  {
 
     @Override
     public void set(int index, Object item) {
-        for (int i=0; i<size; i++) {
-            if (i==index)
+            if (index<size)
                 array[index]=item;
-        }
     }
+
 
     @Override
     public Object get(int index) {
-        for (int i=0; i<size; i++) {
-            if (i==index)
-                return array[index];
-        }
-        throw new IndexOutOfBoundsException();
+        if (index<size)
+            return array[index];
+        else
+            throw new IndexOutOfBoundsException();
     }
 
     @Override

@@ -8,6 +8,7 @@ public class LinkedList implements List, Deque {
 
     public LinkedList () {
         array = new Object[10];
+
     }
 
     private LinkedList(Object[] array) {
@@ -33,55 +34,59 @@ public class LinkedList implements List, Deque {
 
     @Override
     public Object getFirst() {
-        if (size>0)
-            return array[0];
-        else
+        if (isEmpty())
             throw new IndexOutOfBoundsException();
+        else
+            return array[0];
     }
 
 
     @Override
     public Object getLast() {
-        if (size>0)
-            return array[size];
-        else
+        if (isEmpty())
             throw new IndexOutOfBoundsException();
+        else
+            return array[size];
     }
 
     @Override
     public Object pollFirst() {
-        if (size>0){
-            return array[0];
-            array.remove(0);}//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        else
+        if (isEmpty()){
             return null;
+        }//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        else
+            return array[0];
+            remove(0);
     }
 
     @Override
     public Object pollLast() {
-        if (size>0) {
-            return array[size];
-            array.remove(size);//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (isEmpty()) {
+            return null;
         }
-        return null;
+        else {
+            return array[size];}
+        remove(size);
     }
+
 
     @Override
     public Object removeFirst() {
-        if (size>0){
+
+        if (isEmpty())
+            throw new IndexOutOfBoundsException();
+         else
             return array[0];
-            array.remove(0);//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        }
-        throw new IndexOutOfBoundsException();
+            remove(0);//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
 
     @Override
     public Object removeLast() {
-        if (size>0) {
+        if (isEmpty())
+            throw new IndexOutOfBoundsException();
+        else
             return array[size];
-            array.remove(size);//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        }
-        throw new IndexOutOfBoundsException();
+            remove(size);//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
 
     @Override
