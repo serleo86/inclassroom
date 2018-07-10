@@ -196,8 +196,8 @@ public class LinkedList implements List, Deque {
         if (index==size-1)
             removeLast();
         Node nodeForDelete = getNode(index);
-        Node current = nodeForDelete.next;
-        current.prev=nodeForDelete.prev;
+        nodeForDelete.next.prev=nodeForDelete.prev;
+        nodeForDelete.prev.next=nodeForDelete.next;
         size--;
     }
 
