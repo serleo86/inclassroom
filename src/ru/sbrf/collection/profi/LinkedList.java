@@ -203,7 +203,14 @@ public class LinkedList implements List, Deque {
 
     @Override
     public List subList(int from, int to) {
-        return null;
+        checkForRange(to, from);
+        LinkedList result = new LinkedList();
+        result.addFirst(get(from));
+        for (int i = from+1; i < to; i++) {
+            result.addLast(indexOf(i));
+        }
+        return result;
+
     }
 
     @Override
@@ -258,6 +265,12 @@ public class LinkedList implements List, Deque {
     private void checkForExisting(int index) {
         if (index >= size) {
             throw new NoSuchElementException();
+        }
+    }
+
+    private void checkForRange(int to, int from) {
+        if (from > to) {
+            throw new IndexOutOfBoundsException();
         }
     }
 }
