@@ -54,7 +54,8 @@ public class LinkedList implements List, Deque {
 
     @Override
     public Object pollFirst() {
-        checkForExisting(0);
+        //checkForExisting(0);
+
 
         Object result = first.item;
 
@@ -69,26 +70,64 @@ public class LinkedList implements List, Deque {
         return result;
     }
 
-    private void checkForExisting(int index) {
-        if (index >= size) {
-            throw new IndexOutOfBoundsException();
-        }
-    }
+
 
     @Override
     public Object pollLast() {
-        return null;
+        //checkForExisting(0);
+
+        Object result = last.item;
+
+        last = last.prev;
+        if (last != null) {
+            last.next = null;
+        } else {
+            first = null;
+        }
+        size--;
+
+        return result;
     }
+
+
+
 
     @Override
     public Object removeFirst() {
-        return null;
+
+        checkForExisting(0);
+
+        Object result = first.item;
+
+        first = first.next;
+        if (first != null) {
+            first.prev = null;
+        } else {
+            last = null;
+        }
+        size--;
+
+        return result;
+
     }
 
     @Override
     public Object removeLast() {
-        return null;
+        checkForExisting(0);
+
+        Object result = last.item;
+
+        last = last.prev;
+        if (last != null) {
+            last.next = null;
+        } else {
+            first = null;
+        }
+        size--;
+
+        return result;
     }
+
 
     @Override
     public void add(int index, Object item) {
@@ -156,5 +195,12 @@ public class LinkedList implements List, Deque {
     @Override
     public void clear() {
         Node node = new Node();
+    }
+
+
+    private void checkForExisting(int index) {
+        if (index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
     }
 }
