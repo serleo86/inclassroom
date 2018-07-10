@@ -133,6 +133,18 @@ public class LinkedList implements List, Deque {
     public void add(int index, Object item) {
         checkForExisting(index);
 
+        if (index==0)
+           addFirst(item);
+        if (index==size-1)
+            addLast(item);
+
+        Node newNode = new Node ();
+        newNode.item=item;
+        
+
+
+
+
     }
 
     @Override
@@ -183,11 +195,27 @@ public class LinkedList implements List, Deque {
 
     @Override
     public boolean add(Object item) {
-        return false;
+
+        Node newNode = new Node();
+        newNode.item = item;
+        newNode.prev = last;
+        if (last != null) {
+            last.next = newNode;
+        } else {
+            first = newNode;
+        }
+        last = newNode;
+        size++;
+        return true;
     }
 
     @Override
     public boolean remove(Object item) {
+        if (item==first)
+            removeFirst();
+        if (item==last)
+            removeLast();
+
 
         return false;
     }
@@ -203,4 +231,12 @@ public class LinkedList implements List, Deque {
             throw new IndexOutOfBoundsException();
         }
     }
+
+    private void findItemByIndex (int index) {
+        Object newNode = new Node();
+        for (int i = 1; i < index - 1; i++) {
+
+        }
+    }
+
 }
