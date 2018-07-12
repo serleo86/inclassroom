@@ -15,7 +15,7 @@ public class LinkedList implements List, Deque {
     private int size;
 
     @Override
-    public void addFirst(Object item) { //made before - work
+    public void addFirst(Object item) {
         Node newNode = new Node();
         newNode.item = item;
         newNode.next = first;
@@ -29,7 +29,7 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public void addLast(Object item) { //made before - work
+    public void addLast(Object item) {
         Node newNode = new Node();
         newNode.item = item;
         newNode.prev = last;
@@ -43,19 +43,19 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public Object getFirst() { //made before - work
+    public Object getFirst() {
         checkForExisting(0);
         return first.item;
     }
 
     @Override
-    public Object getLast() { //made before - work
+    public Object getLast() {
         checkForExisting(0);
         return last.item;
     }
 
     @Override
-    public Object pollFirst() { //made before - work
+    public Object pollFirst() {
         try {
             return removeFirst();
         } catch (NoSuchElementException e) {
@@ -64,7 +64,7 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public Object pollLast() { //made before - work
+    public Object pollLast() {
         try {
             return removeLast();
         } catch (NoSuchElementException e) {
@@ -74,7 +74,7 @@ public class LinkedList implements List, Deque {
 
 
     @Override
-    public Object removeFirst() { //made before - work
+    public Object removeFirst() {
         checkForExisting(0);
 
         Object result = first.item;
@@ -92,7 +92,7 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public Object removeLast() { //made before - work
+    public Object removeLast() {
         checkForExisting(0);
 
         Object result = last.item;
@@ -110,27 +110,27 @@ public class LinkedList implements List, Deque {
 
 
     @Override
-    public void add(int index, Object item) { //made - work
+    public void add(int index, Object item) {
         checkForExisting(index);
 
         checkForNodeIndex(index, item);
 
         Node newNode = new Node();
-        newNode.item=item;
+        newNode.item = item;
         Node current = getNode(index);
         current.next = current;
         current.prev = newNode;
-        size ++;
+        size++;
     }
 
     @Override
-    public void set(int index, Object item) {//made - work
+    public void set(int index, Object item) {
         checkForExisting(index);
         getNode(index).item = item;
     }
 
     @Override
-    public Object get(int index) { //made before - work
+    public Object get(int index) {
         checkForExisting(index);
         return getNode(index).item;
 
@@ -161,7 +161,7 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public int indexOf(Object item) {//made before - work
+    public int indexOf(Object item) {
         Node current = first;
         for (int i = 0; i < size; i++) {
             if (current.item.equals(item)) {
@@ -173,7 +173,7 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public int lastIndexOf(Object item) { //made - work
+    public int lastIndexOf(Object item) {
         Node current = last;
         for (int i = size - 1; i >= 0; i--) {
             if (current.item.equals(item)) {
@@ -191,9 +191,8 @@ public class LinkedList implements List, Deque {
     }
 
 
-
     @Override
-    public List subList(int from, int to) {//made - work
+    public List subList(int from, int to) {
         checkForRange(to, from);
         LinkedList result = new LinkedList();
         for (int i = from; i < to; i++) {
@@ -215,32 +214,32 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public boolean contains(Object item) { //made - work
+    public boolean contains(Object item) {
         Node current = first;
         for (int i = 0; i < size; i++) {
             if (current.item.equals(item)) {
                 return true;
             }
-            current=current.next;
+            current = current.next;
         }
         return false;
     }
 
 
     @Override
-    public boolean add(Object item) { //made - work
+    public boolean add(Object item) {
         addLast(item);
         return true;
     }
 
     @Override
-    public boolean remove(Object item) { //made - work
-        if (indexOf(item)==-1)
+    public boolean remove(Object item) {
+        if (indexOf(item) == -1)
             return false;
         else {
             remove(indexOf(item));
-            }
-            return true;
+        }
+        return true;
     }
 
     @Override
@@ -261,27 +260,26 @@ public class LinkedList implements List, Deque {
     }
 
     private void checkForNodeIndex(int index, Object item) {
-        if (index==0)
+        if (index == 0)
             addFirst(item);
-        if (index==size-1)
+        if (index == size - 1)
             addLast(item);
     }
 
-    private void removeNode (Node node) {
-        if (node.prev == null) {
-            first = node.next;
-            first.prev=null;
-            size--;
-        }
-        else if (node.next == null) {
-            last = node.prev;
-            last.next=null;
-            size--;
+    private void removeNode(Node removingNode) {
+        if (removingNode.prev != null) {
+            removingNode.prev.next = removingNode.next;
         } else {
-            node.next.prev = node.prev;
-            node.prev.next = node.next;
-            size--;
+            first = removingNode.next;
         }
+
+        if (removingNode.next != null) {
+            removingNode.next.prev = removingNode.prev;
+        } else {
+            last = removingNode.prev;
+        }
+
+        size--;
     }
 
 }
