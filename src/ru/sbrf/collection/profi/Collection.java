@@ -1,15 +1,15 @@
 package ru.sbrf.collection.profi;
 
-public interface Collection {
+public interface Collection<Type> {
     int size();
 
     boolean isEmpty();
 
-    boolean contains(Object item);
+    boolean contains(Type item);
 
-    boolean add(Object item);
+    boolean add(Type item);
 
-    boolean remove(Object item);
+    boolean remove(Type item);
 
     void clear();
 }

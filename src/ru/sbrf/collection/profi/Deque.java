@@ -1,19 +1,19 @@
 package ru.sbrf.collection.profi;
 
-public interface Deque extends Collection {
-    void addFirst(Object item);
+public interface Deque<Type> extends Collection<Type> {
+    void addFirst(Type item);
 
-    void addLast(Object item);
+    void addLast(Type item);
 
-    Object getFirst();
+    Type getFirst();
 
-    Object getLast();
+    Type getLast();
 
-    Object pollFirst();
+    Type pollFirst();
 
-    Object pollLast();
+    Type pollLast();
 
-    Object removeFirst();
+    Type removeFirst();
 
-    Object removeLast();
+    Type removeLast();
 }

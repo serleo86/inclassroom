@@ -1,15 +1,15 @@
 package ru.sbrf.collection.profi;
 
-public interface List extends Collection {
-    void add(int index, Object item);
+public interface List<Type> extends Collection<Type> {
+    void add(int index, Type item);
 
-    void set(int index, Object item);
+    void set(int index, Type item);
 
     Object get(int index);
 
-    int indexOf(Object item);
+    int indexOf(Type item);
 
-    int lastIndexOf(Object item);
+    int lastIndexOf(Type item);
 
     void remove(int index);
 
