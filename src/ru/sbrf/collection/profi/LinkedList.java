@@ -15,7 +15,7 @@ public class LinkedList implements List, Deque {
     private int size;
 
     @Override
-    public void addFirst(Object item) { //made before
+    public void addFirst(Object item) { //made before - work
         Node newNode = new Node();
         newNode.item = item;
         newNode.next = first;
@@ -29,7 +29,7 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public void addLast(Object item) { //made before
+    public void addLast(Object item) { //made before - work
         Node newNode = new Node();
         newNode.item = item;
         newNode.prev = last;
@@ -43,19 +43,19 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public Object getFirst() { //made before
+    public Object getFirst() { //made before - work
         checkForExisting(0);
         return first.item;
     }
 
     @Override
-    public Object getLast() { //made before
+    public Object getLast() { //made before - work
         checkForExisting(0);
         return last.item;
     }
 
     @Override
-    public Object pollFirst() { //made before
+    public Object pollFirst() { //made before - work
         try {
             return removeFirst();
         } catch (NoSuchElementException e) {
@@ -64,7 +64,7 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public Object pollLast() { //made before
+    public Object pollLast() { //made before - work
         try {
             return removeLast();
         } catch (NoSuchElementException e) {
@@ -74,7 +74,7 @@ public class LinkedList implements List, Deque {
 
 
     @Override
-    public Object removeFirst() { //made before
+    public Object removeFirst() { //made before - work
         checkForExisting(0);
 
         Object result = first.item;
@@ -92,7 +92,7 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public Object removeLast() { //made before
+    public Object removeLast() { //made before - work
         checkForExisting(0);
 
         Object result = last.item;
@@ -110,13 +110,10 @@ public class LinkedList implements List, Deque {
 
 
     @Override
-    public void add(int index, Object item) { //made
+    public void add(int index, Object item) { //made - work
         checkForExisting(index);
 
-        if (index==0)
-            addFirst(item);
-        if (index==size-1)
-            addLast(item);
+        checkForNodeIndex(index, item);
 
         Node newNode = new Node();
         newNode.item=item;
@@ -127,13 +124,13 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public void set(int index, Object item) {//made
+    public void set(int index, Object item) {//made - work
         checkForExisting(index);
         getNode(index).item = item;
     }
 
     @Override
-    public Object get(int index) { //made before
+    public Object get(int index) { //made before - work
         checkForExisting(index);
         return getNode(index).item;
 
@@ -160,11 +157,11 @@ public class LinkedList implements List, Deque {
         for (int i = size - 1; i >= index; i--) {
             current = current.prev;
         }
-        return current;
+        return current.next;
     }
 
     @Override
-    public int indexOf(Object item) {//made before
+    public int indexOf(Object item) {//made before - work
         Node current = first;
         for (int i = 0; i < size; i++) {
             if (current.item.equals(item)) {
@@ -176,7 +173,7 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public int lastIndexOf(Object item) { //made
+    public int lastIndexOf(Object item) { //made - work
         Node current = last;
         for (int i = size - 1; i >= 0; i--) {
             if (current.item.equals(item)) {
@@ -189,70 +186,60 @@ public class LinkedList implements List, Deque {
     }
 
     @Override
-    public void remove(int index) {//made
-        checkForExisting(index);
-        if (index==0)
-            removeFirst();
-        if (index==size-1)
-            removeLast();
-        Node nodeForDelete = getNode(index);
-        nodeForDelete.next.prev=nodeForDelete.prev;
-        nodeForDelete.prev.next=nodeForDelete.next;
-        size--;
+    public void remove(int index) {//made - work
+        removeNode(getNode(index));
     }
 
+
+
     @Override
-    public List subList(int from, int to) {
+    public List subList(int from, int to) {//made
         checkForRange(to, from);
         LinkedList result = new LinkedList();
         result.addFirst(get(from));
         for (int i = from+1; i < to; i++) {
-            result.addLast(indexOf(i));
+            result.addLast(get(i));
         }
         return result;
 
     }
 
     @Override
-    public int size() { //made before
+    public int size() { //work
         return size;
     }
 
 
     @Override
-    public boolean isEmpty() { //made before
+    public boolean isEmpty() { //work
         return (size == 0);
     }
 
     @Override
-    public boolean contains(Object item) { //made
+    public boolean contains(Object item) { //made - work
         Node current = first;
         for (int i = 0; i < size; i++) {
             if (current.item.equals(item)) {
                 return true;
             }
+            current=current.next;
         }
         return false;
     }
 
 
     @Override
-    public boolean add(Object item) { //made
+    public boolean add(Object item) { //made - work
         addLast(item);
         return true;
     }
 
     @Override
-    public boolean remove(Object item) { //made
+    public boolean remove(Object item) { //made - work
         if (indexOf(item)==-1)
             return false;
         else {
-            if (indexOf(item)==0)
-                removeFirst();
-            if (indexOf(item)==size-1)
-                removeLast();
-            else
-                remove(indexOf(item));
+            remove(indexOf(item));
             }
             return true;
     }
@@ -273,4 +260,29 @@ public class LinkedList implements List, Deque {
             throw new IndexOutOfBoundsException();
         }
     }
+
+    private void checkForNodeIndex(int index, Object item) {
+        if (index==0)
+            addFirst(item);
+        if (index==size-1)
+            addLast(item);
+    }
+
+    private void removeNode (Node node) {
+        if (node.prev == null) {
+            first = node.next;
+            first.prev=null;
+            size--;
+        }
+        else if (node.next == null) {
+            last = node.prev;
+            last.next=null;
+            size--;
+        } else {
+            node.next.prev = node.prev;
+            node.prev.next = node.next;
+            size--;
+        }
+    }
+
 }
