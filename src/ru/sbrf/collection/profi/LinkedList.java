@@ -193,12 +193,11 @@ public class LinkedList implements List, Deque {
 
 
     @Override
-    public List subList(int from, int to) {//made
+    public List subList(int from, int to) {//made - work
         checkForRange(to, from);
         LinkedList result = new LinkedList();
-        result.addFirst(get(from));
-        for (int i = from+1; i < to; i++) {
-            result.addLast(get(i));
+        for (int i = from; i < to; i++) {
+            result.add(get(i));
         }
         return result;
 
