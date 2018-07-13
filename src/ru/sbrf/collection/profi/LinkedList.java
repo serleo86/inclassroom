@@ -153,11 +153,21 @@ public class LinkedList<Type> implements List<Type>, Deque<Type> {
     // ToDo: учет null
     public int indexOf(Type item) {
         Node current = first;
-        for (int i = 0; i < size; i++) {
-            if (item.equals(current.item)) {
-                return i;
+
+        if (current.item == null) {
+            for (int i = 0; i < size; i++) {
+                if (item == null)
+                    return i;
+                else
+                    current = current.next;
             }
-            current = current.next;
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (item.equals(current.item)) {
+                    return i;
+                }
+                current = current.next;
+            }
         }
         return -1;
     }
@@ -166,15 +176,27 @@ public class LinkedList<Type> implements List<Type>, Deque<Type> {
     // ToDo:
     public int lastIndexOf(Type item) {
         Node current = last;
-        for (int i = size - 1; i >= 0; i--) {
-            if (current.item.equals(item)) {
-                return i;
-            } else {
-                current = current.prev;
+
+        if (current.item == null) {
+            for (int i = size - 1; i >= 0; i--) {
+                if (item==null)
+                    return i;
+                else
+                    current = current.next;
             }
-        }
+        } else {
+            for (int i = size - 1; i >= 0; i--) {
+                if (item.equals(current.item))
+                    return i;
+                else {
+                    current = current.prev;
+                    }
+                }
+            }
         return -1;
-    }
+        }
+
+
 
     @Override
     public void remove(int index) {
