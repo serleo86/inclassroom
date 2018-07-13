@@ -98,12 +98,20 @@ public class ArrayList<Type> implements List<Type> {
     @Override
     // ToDo:
     public int lastIndexOf(Type item) {
-        for (int i = size - 1; i >= 0; i--) {
-            if (array[i].equals(item))
-                return i;
+        if (item == null) {
+            for (int i = size - 1; i >= 0; i--) {
+                if (array[i] == null)
+                    return i;
+            }
+        } else {
+            for (int i = size-1; i >=0; i--) {
+                if (item.equals(array[i]))
+                    return i;
+            }
         }
         return -1;
     }
+
 
     @Override
     public void remove(int index) {
