@@ -3,6 +3,8 @@ package ru.sbrf.collection.profi;
 
 @SuppressWarnings("unchecked")
 public class ArrayList<Type> implements List<Type> {
+    private static final int NOT_FOUND = -1;
+
     private Type[] array;
     private int size;
 
@@ -26,7 +28,7 @@ public class ArrayList<Type> implements List<Type> {
 
     @Override
     public boolean contains(Type item) {
-        return indexOf(item) != -1;
+        return indexOf(item) != NOT_FOUND;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class ArrayList<Type> implements List<Type> {
     @Override
     public boolean remove(Type item) {
         int index = indexOf(item);
-        if (index != -1) {
+        if (index != NOT_FOUND) {
             remove(index);
             return true;
         }
@@ -92,11 +94,10 @@ public class ArrayList<Type> implements List<Type> {
                     return i;
             }
         }
-        return -1;
+        return NOT_FOUND;
     }
 
     @Override
-    // ToDo:
     public int lastIndexOf(Type item) {
         if (item == null) {
             for (int i = size - 1; i >= 0; i--) {
@@ -104,14 +105,13 @@ public class ArrayList<Type> implements List<Type> {
                     return i;
             }
         } else {
-            for (int i = size-1; i >=0; i--) {
+            for (int i = size - 1; i >= 0; i--) {
                 if (item.equals(array[i]))
                     return i;
             }
         }
-        return -1;
+        return NOT_FOUND;
     }
-
 
     @Override
     public void remove(int index) {

@@ -4,6 +4,8 @@ package ru.sbrf.collection.profi;
 import java.util.NoSuchElementException;
 
 public class LinkedList<Type> implements List<Type>, Deque<Type> {
+    private static final int NOT_FOUND = -1;
+
     private static class Node<Type> {
         private Node<Type> prev;
         private Node<Type> next;
@@ -76,7 +78,6 @@ public class LinkedList<Type> implements List<Type>, Deque<Type> {
     public Type removeFirst() {
         checkForNotEmpty();
         return removeNode(first);
-
     }
 
     @Override
@@ -87,10 +88,15 @@ public class LinkedList<Type> implements List<Type>, Deque<Type> {
 
     @Override
     public void add(int index, Type item) {
+        if (index == size) {
+            addLast(item);
+            return;
+        }
+
         checkForRange(index);
 
         Node<Type> next = getNode(index);
-        Node<Type> prev = (next != null) ? next.prev : null;
+        Node<Type> prev = next.prev;
 
         Node<Type> newNode = new Node<>();
         newNode.item = item;
@@ -103,11 +109,7 @@ public class LinkedList<Type> implements List<Type>, Deque<Type> {
             first = newNode;
         }
 
-        if (next != null) {
-            next.prev = newNode;
-        } else {
-            last = newNode;
-        }
+        next.prev = newNode;
 
         size++;
     }
@@ -122,7 +124,6 @@ public class LinkedList<Type> implements List<Type>, Deque<Type> {
     public Type get(int index) {
         checkForRange(index);
         return getNode(index).item;
-
     }
 
     private Node<Type> getNode(int index) {
@@ -150,18 +151,17 @@ public class LinkedList<Type> implements List<Type>, Deque<Type> {
     }
 
     @Override
-    // ToDo: учет null
     public int indexOf(Type item) {
-        Node current = first;
-
-        if (current.item == null) {
+        if (item == null) {
+            Node current = first;
             for (int i = 0; i < size; i++) {
-                if (item == null)
+                if (current.item == null) {
                     return i;
-                else
-                    current = current.next;
+                }
+                current = current.next;
             }
         } else {
+            Node current = first;
             for (int i = 0; i < size; i++) {
                 if (item.equals(current.item)) {
                     return i;
@@ -169,34 +169,31 @@ public class LinkedList<Type> implements List<Type>, Deque<Type> {
                 current = current.next;
             }
         }
-        return -1;
+        return NOT_FOUND;
     }
 
     @Override
-    // ToDo:
     public int lastIndexOf(Type item) {
-        Node current = last;
-
-        if (current.item == null) {
+        if (item == null) {
+            Node current = last;
             for (int i = size - 1; i >= 0; i--) {
-                if (item==null)
+                if (current.item == null) {
                     return i;
-                else
-                    current = current.next;
+                }
+                current = current.next;
             }
         } else {
+            Node current = last;
             for (int i = size - 1; i >= 0; i--) {
                 if (item.equals(current.item))
                     return i;
                 else {
                     current = current.prev;
-                    }
                 }
             }
-        return -1;
         }
-
-
+        return NOT_FOUND;
+    }
 
     @Override
     public void remove(int index) {
@@ -226,7 +223,7 @@ public class LinkedList<Type> implements List<Type>, Deque<Type> {
 
     @Override
     public boolean contains(Type item) {
-        return indexOf(item) != -1;
+        return indexOf(item) != NOT_FOUND;
     }
 
     @Override
@@ -237,9 +234,9 @@ public class LinkedList<Type> implements List<Type>, Deque<Type> {
 
     @Override
     public boolean remove(Type item) {
-        if (indexOf(item) == -1)
+        if (indexOf(item) == NOT_FOUND) {
             return false;
-        else {
+        } else {
             remove(indexOf(item));
             return true;
         }
@@ -289,5 +286,4 @@ public class LinkedList<Type> implements List<Type>, Deque<Type> {
 
         return result;
     }
-
 }

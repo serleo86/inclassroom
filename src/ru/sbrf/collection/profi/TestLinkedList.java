@@ -13,7 +13,7 @@ public class TestLinkedList {
 
         list.add("one"); //0
         list.add("two"); //1
-        list.add("three"); //2
+        list.add(null); //2
         list.add("four"); //3
         list.add("five"); //4
         list.add("two"); //5
@@ -29,9 +29,9 @@ public class TestLinkedList {
         //System.out.println(list.get(0));
         //System.out.println(list.indexOf("one"));
         //System.out.println(list.indexOf("two"));
-        System.out.println("Все содержимое (ищем по индексам):");
+        //System.out.println("Все содержимое (ищем по индексам):");
         //System.out.println(list.get(2));
-        System.out.println(list.lastIndexOf("five"));
+        System.out.println(list.indexOf(null));
         //System.out.println(list.indexOf("four"));
         //System.out.println(list.indexOf("five"));
         //System.out.println(list.indexOf("six"));
