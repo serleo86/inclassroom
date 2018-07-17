@@ -62,7 +62,7 @@ public class ListCommand {
         System.out.println("5. addByIndex");
         System.out.println("6. getByIndex");
         System.out.println("7. remove");
-        System.out.println("8. removeByIndex");
+        System.out.println("8. remove");
         System.out.println("9. goToMain");
     }
 
