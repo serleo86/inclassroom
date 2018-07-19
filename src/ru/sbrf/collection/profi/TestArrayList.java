@@ -1,9 +1,14 @@
 package ru.sbrf.collection.profi;
 
+import ru.sbrf.collection.anotations.TestAnnotationedClass1;
+import ru.sbrf.collection.anotations.Version;
+
 public class TestArrayList {
     public static void main(String[] args) {
         List <String> list = new ArrayList<>();
         int size=0;
+
+
 
         list.add("one"); //0
         list.add("two"); //1
