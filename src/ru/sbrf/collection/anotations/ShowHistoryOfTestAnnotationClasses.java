@@ -3,7 +3,7 @@ package ru.sbrf.collection.anotations;
 /**
  * Created by sbt-panichev-sl on 20.07.2018.
  */
-public class TestAnnotationClassForGetHistory {
+public class ShowHistoryOfTestAnnotationClasses {
     public static void main(String[] args) {
 
         Version annotation = TestAnnotationedClass3.class.getAnnotation(Version.class);
@@ -17,7 +17,6 @@ public class TestAnnotationClassForGetHistory {
             System.out.println();
 
             annotation=annotation.previous().getAnnotation(Version.class);
-
         }
     }
 }
