@@ -9,18 +9,23 @@ public class ShowHistoryOfTestAnnotationClasses {
     }
 
     private static void showOutHistory(Class<?> clazz) {
-        while (clazz != Void.class) {
+        if (clazz != Void.class) {
             Version annotation = clazz.getAnnotation(Version.class);
-            showOutAnnotationInfo(annotation);
-            clazz = annotation.previous();
+            showOutAnnotationInfo(clazz, annotation);
+            showOutHistory(annotation.previous());
         }
     }
 
-    private static void showOutAnnotationInfo(Version annotation) {
-        System.out.println("Версия = " + annotation.value());
-        System.out.println("Автор: " + annotation.author());
-        System.out.println("Дата создания: " + annotation.creationDate());
-        System.out.println("Предыдущая версия: " + annotation.previous());
+    private static void showOutAnnotationInfo(Class<?> clazz, Version version) {
+        System.out.println("Класс: " + clazz.getSimpleName());
+        System.out.println("Версия: " + version.value());
+        System.out.println("Автор: " + version.author());
+        System.out.println("Дата создания: " + getFormatedDate(version.creationDate()));
+        System.out.println("Предыдущая версия: " + version.previous());
         System.out.println();
+    }
+
+    private static String getFormatedDate(Date creationDate) {
+        return String.format("%d.%d.%d", creationDate.day(), creationDate.month(), creationDate.year());
     }
 }

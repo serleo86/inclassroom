@@ -1,15 +1,15 @@
 package ru.sbrf.collection.generic;
 
-public class Man implements Voter {
+public class Women implements Voter {
     private final AgeCategory ageCategory;
 
-    public Man(int age) {
+    public Women(int age) {
         ageCategory = AgeCategory.valueOf(age);
     }
 
     @Override
     public Gender getGender() {
-        return Gender.MALE;
+        return Gender.FEMALE;
     }
 
     @Override
